@@ -79,13 +79,13 @@ public:
         users->push_back(new User(username, password, UserType::MEMBER));
     }
     bool deleteAccount(vector<AbstractUser*> *users){
-        int i=0;
+
         for(auto user = users->begin(); user != users->end(); user++) {
             if ((*user)->getUsername() == this->username) {
-                users->erase(users->begin()+i);
+                users->erase(user);
                 return true;
             }
-            i++;
+
         }
         return false;
     }
