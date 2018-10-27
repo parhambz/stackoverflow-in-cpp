@@ -18,11 +18,13 @@ enum UserType{
 
 
 class UserAlreadyExistsException:public exception{
+public:
     const char * what () const throw(){
         return "User Already Exists";
     }
 };
 class UsernameOrPasswordWrongException:public exception {
+public:
     const char * what()const throw(){
         return "username or password is wrong";
     }
@@ -131,11 +133,13 @@ int main(){
                         cin >> username;
                         cout << "Enter Password" << endl;
                         cin >> password;
-                        loggedInUser = User::login(&appDatabase.appUsers, username, password);
-                        if (loggedInUser == nullptr) {
-                            cout << "couldn't login with given credentials.";
-                        } else {
+
+                        try{
+                            loggedInUser = User::login(&appDatabase.appUsers, username, password);
                             menuState = MenuState::LOGGED_IN;
+                        }
+                        catch (UsernameOrPasswordWrongException ex){
+                            cout<<ex.what()<<endl;
                         }
                         break;
                     }
